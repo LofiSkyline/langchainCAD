@@ -1,3 +1,4 @@
+
 """CAD-related service functions built on LangChain."""
 
 import os
@@ -7,7 +8,9 @@ from langchain.chains import LLMChain, SequentialChain
 from langchain.prompts import PromptTemplate
 from langchain.llms import OpenAI
 
+
 from ..relay.vlm_client import call_vlm
+
 
 
 def init_llm() -> OpenAI:
