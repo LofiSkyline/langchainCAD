@@ -21,4 +21,9 @@ CAD drawing analysis through VLM.
   - `relay/` - Interfaces for calling VLM/LLM models
 - `run.py` - Entry point for running the Flask server
 
-This is a minimal skeleton to get started. Replace stub functions with real implementations.
+
+Set the `OPENAI_API_KEY` environment variable before running to allow LangChain
+to access your model provider.
+
+This is a minimal skeleton to get started. Replace stub functions with real
+implementations.
