@@ -1,2 +1,2 @@
 # langchainCAD
-use
+CAD drawing analysis through VLM
