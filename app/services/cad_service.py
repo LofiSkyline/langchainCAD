@@ -1,14 +1,10 @@
-"""CAD-related service functions built on LangChain."""
-
 import os
 from typing import Dict, Any
 
 from langchain.chains import LLMChain, SequentialChain
 from langchain.prompts import PromptTemplate
 from langchain.llms import OpenAI
-
 from ..relay.vlm_client import call_vlm
-
 
 def init_llm() -> OpenAI:
     """Initialise the LLM client from environment variables."""
@@ -69,12 +65,15 @@ def _confirm_with_vlm(result: str, json_data: str) -> Dict[str, Any]:
 
 def analyze(data: Dict[str, Any]) -> Dict[str, Any]:
     """Analyze CAD data with a LangChain pipeline and VLM confirmation."""
+
     json_data = data.get("json")
     if json_data is None:
         raise ValueError("'json' field is required")
 
+
     llm = init_llm()
     chain = _build_chains(llm)
+
 
     chain_result: Dict[str, Any] = chain({"json_data": json_data})
 
@@ -92,4 +91,5 @@ def analyze(data: Dict[str, Any]) -> Dict[str, Any]:
 
     chain_result["confirmation"] = confirmation
     return chain_result
+
 
