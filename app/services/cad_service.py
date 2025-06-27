@@ -26,21 +26,22 @@ def _build_chains(llm: OpenAI) -> SequentialChain:
     step1_prompt = PromptTemplate(
         input_variables=["pdf", "json"],
         template=(
-            "Step1: \u8bf7\u6839\u636e\u8f93\u5165PDF\u548cJSON\uff0c\u63d0\u53d6\u6240\u6709\u96f6\u4ef6\u5c3a\u5bf8\u4e0e\u7c7b\u578b..."
+            "Step1: 请根据输入PDF和JSON，提取所有零件尺寸与类别..."
         ),
     )
     step2_prompt = PromptTemplate(
         input_variables=["step1_result"],
         template=(
-            "Step2: \u4e0a\u4e00\u6b65\u63d0\u53d6\u7684\u7ed3\u679c\u5982\u4e0b\uff1a{step1_result}\u3002\u8bf7\u5206\u6790\u5404\u5c3a\u5bf8\u7684\u5408\u7406\u6027\uff0c\u5e76\u627e\u51fa\u7591\u70b9..."
+            "Step2: 上一步提取的结果如下：{step1_result}。请分析各尺寸的合理性，并找出疑点..."
         ),
     )
     step3_prompt = PromptTemplate(
         input_variables=["step2_result"],
         template=(
-            "Step3: \u4f60\u7684\u4e0a\u4e00\u6b65\u5206\u6790\u5982\u4e0b\uff1a{step2_result}\u3002\u8bf7\u7ed3\u5408\u5de5\u7a0b\u89c4\u5219\u81ea\u67e5\u7ed3\u8bba\uff0c\u82e5\u53d1\u73b0\u9519\u8bef\u8bf7\u4fee\u6b63\u5e76\u8bf4\u660e\u601d\u8def..."
+            "Step3: 你的上一步分析如下：{step2_result}。请结合工程规则自查结论，若发现错误请修正并说明思路..."
         ),
     )
+
 
     step1_chain = LLMChain(llm=llm, prompt=step1_prompt, output_key="step1_result")
     step2_chain = LLMChain(llm=llm, prompt=step2_prompt, output_key="step2_result")
